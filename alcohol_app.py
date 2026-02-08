@@ -11,7 +11,7 @@ st.title("🍹 飲酒ログ & 分解予測")
 # Googleスプレッドシートへの接続
 try:
     conn = st.connection("gsheets", type=GSheetsConnection)
-    df = conn.read(worksheet="database", ttl="0s")
+    df = conn.read(spreadsheet=st.secrets["connections"]["gsheets"]["spreadsheet"], worksheet="database", ttl="0s")
 except:
     st.error("スプレッドシートへの接続設定が必要です。")
     df = pd.DataFrame(columns=["date", "drink_type", "amount", "alcohol_g"])
@@ -79,3 +79,4 @@ if not df.empty:
         df['week'] = df['date'].dt.to_period('W').apply(lambda r: r.start_time)
 
         weekly = df.groupby('week')['alcohol_g'].sum().reset_index()
+
