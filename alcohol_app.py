@@ -80,3 +80,4 @@ if not df.empty:
 
         weekly = df.groupby('week')['alcohol_g'].sum().reset_index()
 
+
